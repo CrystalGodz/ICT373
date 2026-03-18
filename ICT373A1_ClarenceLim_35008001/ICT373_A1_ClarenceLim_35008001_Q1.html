@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "ICT373_A1">
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Assignment1
+		</title>
+		<script>
+			function isValidDate(form){
+				var dateString = form.birthDate.value
+				
+				// Validate date format (DD/MM/YYYY)
+				var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+				if (!dateString.match(dateRegex)){
+					alert("Invalid date format, try again.");
+					return false;
+				}
+
+				// Extract day, month, and year
+				var [day, month, year] = dateString.split('/').map(Number);
+
+				// Validate month
+				if (month < 1 || month > 12){
+					alert("Invalid month, try again.");
+					return false;
+				}
+
+				// Validate day
+				var daysInMonth = new Date(year, month, 0).getDate();
+				if (day < 1 || day > daysInMonth){
+					alert("Invalid days in month, try again.");
+					return false;
+				}
+
+				// Validate year
+				var currentYear = new Date().getFullYear();
+				if (year < 1900 || year > currentYear){
+					alert("Invalid year, try again.");
+					return false;
+				}
+
+				// Validate month
+				var currentMonth = new Date().getMonth();
+				if (year === currentYear && month > (currentMonth + 1)){
+					alert("Invalid month, try again.");
+					return false;
+				}
+
+				// Validate day
+				var currentDay = new Date().getDate();
+				if (year === currentYear && month === (currentMonth + 1) && day > currentDay){
+					alert("Invalid date, try again.");
+					return false;
+				}
+
+				//Validate months wtih 30 days
+				if (month === 4 || month === 6 || month === 9 || month === 11){
+					if (day == 31){
+						alert("Invalid date, try again.");
+						return false; // Not a month with 31 days
+					}
+				}
+
+				// Validate leap year
+				if (month === 2 && day === 29){
+					if ((year % 4 !== 0) || (year % 100 === 0 && year % 400 !== 0)){
+						alert("Invalid date, try again.");
+						return false; // Not a leap year
+					}
+				}
+				return true;
+			}
+		</script>
+	</head>
+
+	<body>
+		<h1>
+			User Fill-up Form
+		</h1>
+
+		<form method="GET"
+			action = "http://www.it.murdoch.edu.au/cgi-bin/reply1.pl "
+			onsubmit ="return isValidDate(this)">
+
+			<p> Name:
+			<input name="name" type="text" size="20" required><br>
+
+			Phone Number (6-15 digits long):
+			<input name="phoneNumber"
+				pattern="^\d{6,15}$" required><br>
+
+			Birth Date in [DD/MM/YYYY] format:
+			<input name="birthDate" required><br>
+
+			Favourite Pastime:
+			<select name="favPastTime" required>
+				<option> Surfing the Web
+				<option>Playing Sport
+				<option>Listening to Music
+				<option>Watching TV
+				<option>Playing Games
+				<option>Community Service
+				<option >Daydreaming
+				<option>Reading
+				<option>Meditation
+			</select>
+			</p>
+
+			<p>
+				<input type="submit">
+				<input type="reset">
+			</p>
+
+		</form>
+	</body>
+</html>

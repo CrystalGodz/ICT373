@@ -1,0 +1,4 @@
+Fun with Java,10.00
+Daily dose of C++,12.50
+Coding with Ruby,12.20
+Living in the world of programmers,8.50
